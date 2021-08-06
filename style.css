@@ -1,0 +1,11 @@
+/* this stylesheet is used by all pages in this website, yay */
+
+* {
+  background-color: #333333;
+  
+  margin: 0px;
+  border: 0px;
+  padding: 0px;
+
+  overflow: hidden;
+}
