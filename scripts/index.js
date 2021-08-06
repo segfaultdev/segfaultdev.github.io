@@ -4,8 +4,8 @@ let grid_height = 0;
 let cells = [];
 
 function setup() {
-  grid_width = floor(windowWidth / 32);
-  grid_height = floor(windowHeight / 32);
+  grid_width = ceil(windowWidth / 32);
+  grid_height = ceil(windowHeight / 32);
 
   for (let i = 0; i < 1000; i++) {
     for (let tries = 0; tries < 100; tries++) {
