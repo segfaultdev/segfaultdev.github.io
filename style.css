@@ -11,31 +11,54 @@
 }
 
 * {
-  font-family: dina, Ubuntu Mono, Consolas;
-  font-size: 48px;
-
   background-color: transparent;
   color: #EEEEEE;
 
   margin: 0px;
   border: 0px;
   padding: 0px;
+}
 
-  overflow: hidden;
+h3, h4, p, span {
+  font-size: 32px;
+}
+
+b {
+  font-family: dina_bold, Ubuntu Mono, Consolas;
+}
+
+h1 {
+  font-size: 64px;
+}
+
+h2 {
+  font-size: 48px;
+}
+
+h5, h6 {
+  font-size: 16px;
 }
 
 html, body {
+  font-family: dina, Ubuntu Mono, Consolas;
+
   width: 100%;
   height: 100%;
 }
 
-canvas {  
+main {
   background-color: #000000;
 
-  position: absolute;
+  position: fixed;
+  overflow: hidden;
 
   left: 0px;
   top: 0px;
 
   z-index: -1;
+  
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
 }
