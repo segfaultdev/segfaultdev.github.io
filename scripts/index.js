@@ -2,14 +2,18 @@ let grid_width = 0;
 let grid_height = 0;
 
 let cells = [];
+let canvas;
 
-function setup() {
-  grid_width = ceil(windowWidth / 32);
-  grid_height = ceil(windowHeight / 32);
+let mouseX = 0;
+let mouseY = 0;
+
+document.addEventListener("DOMContentLoaded", function() {
+  grid_width = Math.ceil(window.innerWidth / 32);
+  grid_height = Math.ceil(window.innerWidth / 32);
 
   for (let i = 0; i < 1000; i++) {
     for (let tries = 0; tries < 100; tries++) {
-      let pos = [random(0, grid_width), random(0, grid_height)];
+      let pos = [Math.random() * grid_width, Math.random() * grid_height, Math.random() * 8 * Math.PI];
       let valid = true;
 
       for (let cell of cells) {
@@ -25,13 +29,29 @@ function setup() {
     }
   }
 
-  noSmooth();
-  createCanvas(windowWidth, windowHeight);
+  canvas = document.createElement("canvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  document.getElementsByTagName("main")[0].appendChild(canvas);
+
+  document.onmousemove = update_mouse;
+
+  setInterval(render, 16);
+}, false);
+
+function update_mouse(event) {
+  event = event || window.event;
+
+  mouseX = event.clientX;
+  mouseY = event.clientY;
 }
 
-function draw() {
-  background(0);
-  noStroke();
+function render() {
+  let ctx = canvas.getContext("2d");
+
+  let date = new Date();
+  let millis = date.getTime();
 
   for (let i = 0; i < grid_height; i++) {
     for (let j = 0; j < grid_width; j++) {
@@ -52,15 +72,14 @@ function draw() {
       pos = [mouseX / 32, mouseY / 32];
       let dist = (best_cell[0] - pos[0]) * (best_cell[0] - pos[0]) + (best_cell[1] - pos[1]) * (best_cell[1] - pos[1]);
 
-      let value = sin(noise(best_cell[0] / 10, best_cell[1] / 10, millis() / 4000)) * 64;
-      if (value < 0) value = 0;
+      let value = (Math.sin(millis / 2000 + best_cell[2]) + 1) * 32;
 
       if (dist < 128) {
-        value += map(dist, 0, 128, 63, 0);
+        value += 64 - (dist / 2);
       }
 
-      fill(0, 0, value);
-      rect(j * 32, i * 32, 32, 32);
+      ctx.fillStyle = "rgb(0, 0, " + value + ")";
+      ctx.fillRect(j * 32, i * 32, 32, 32);
     }
   }
 }
